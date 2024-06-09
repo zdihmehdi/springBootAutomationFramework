@@ -1,6 +1,5 @@
 package de.automation.automation;
 
-import com.github.javafaker.Faker;
 import de.automation.automation.config.WebDriverConfig;
 import de.automation.automation.listeners.TestListener;
 import de.automation.automation.pages.Base;

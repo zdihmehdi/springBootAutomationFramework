@@ -8,6 +8,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -30,6 +31,14 @@ public class WebDriverConfig {
         options.addArguments("--headless");
         options.addArguments("--start-maximized");
         return new ChromeDriver(options);
+    }
+
+
+    @Bean
+    @ConditionalOnExpression("'${automation.browser:remote}'.equals('remote')")
+    public WebDriver remoteChromeDriver() {
+        ChromeOptions options = new ChromeOptions();
+        return new RemoteWebDriver(options);
     }
 
     @Bean
