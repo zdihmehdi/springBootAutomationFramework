@@ -27,7 +27,7 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
 
         ChromeOptions options = new ChromeOptions();
         // URL of the Selenium hub
-        String seleniumHubUrl = "http://localhost:4444/wd/hub";
+        String seleniumHubUrl = "http://54.93.239.34:4444/wd/hub";
         return new RemoteWebDriver(new URL(seleniumHubUrl), options);
     }
 }
