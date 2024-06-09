@@ -1,9 +1,0 @@
-de\automation\automation\pages\qyterawebsite\SearchComponent.class
-de\automation\automation\elements\ButtonElement.class
-de\automation\automation\elements\AbstractWebElement.class
-de\automation\automation\config\FakerConfig.class
-de\automation\automation\config\WebDriverConfig.class
-de\automation\automation\pages\Base.class
-de\automation\automation\AutomationApplication.class
-de\automation\automation\elements\TextInput.class
-de\automation\automation\listeners\TestListener.class
