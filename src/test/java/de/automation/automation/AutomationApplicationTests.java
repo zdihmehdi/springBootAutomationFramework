@@ -24,6 +24,4 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         options.addArguments("--start-maximized");
         return new ChromeDriver(options);
     }
-
-
 }
