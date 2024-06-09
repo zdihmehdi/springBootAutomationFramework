@@ -27,6 +27,7 @@ public class WebDriverConfig {
     public WebDriver chromeDriver() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
         options.addArguments("--start-maximized");
         return new ChromeDriver(options);
     }
