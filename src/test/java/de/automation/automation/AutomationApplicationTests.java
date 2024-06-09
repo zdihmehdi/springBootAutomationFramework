@@ -23,6 +23,7 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
 
     public RemoteWebDriver chromeDriver() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
+        options.setBrowserVersion("116.0.5845.111");
         options.addArguments("--headless");  // Optional: Run Chrome in headless mode
         options.addArguments("--disable-dev-shm-usage"); // Overcome limited resource problems
         options.addArguments("--safebrowsing-disable-auto-update ");
