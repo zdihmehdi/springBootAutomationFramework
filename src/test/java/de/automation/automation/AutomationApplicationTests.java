@@ -16,9 +16,6 @@ import org.testng.annotations.Listeners;
 @SpringBootTest
 class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
 
-    @Autowired
-    TestPage testPage;
-
     @Test
     void contextLoads() {
         System.out.println("HNAAAA");
