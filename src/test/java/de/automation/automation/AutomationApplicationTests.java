@@ -1,5 +1,6 @@
 package de.automation.automation;
 
+import com.github.javafaker.Faker;
 import de.automation.automation.config.WebDriverConfig;
 import de.automation.automation.listeners.TestListener;
 import de.automation.automation.pages.Base;
@@ -34,8 +35,8 @@ class AutomationApplicationTests extends Base {
 
     @AfterMethod
     public void tearDown() {
-        if (webDriverConfig.chromeDriver() != null) {
-            webDriverConfig.chromeDriver().quit();
+        if (driver != null) {
+            driver.quit();
         }
     }
 }
