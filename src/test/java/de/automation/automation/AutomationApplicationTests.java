@@ -34,8 +34,8 @@ class AutomationApplicationTests extends Base {
 
     @AfterMethod
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
+        if (webDriverConfig.chromeDriver() != null) {
+            webDriverConfig.chromeDriver().quit();
         }
     }
 }

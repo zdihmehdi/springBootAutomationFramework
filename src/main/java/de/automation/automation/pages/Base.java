@@ -3,6 +3,7 @@ package de.automation.automation.pages;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import de.automation.automation.config.WebDriverConfig;
 import de.automation.automation.elements.ButtonElement;
 import de.automation.automation.elements.TextInput;
 import io.qameta.allure.Step;
@@ -17,7 +18,7 @@ import java.util.function.Supplier;
 @Component
 public abstract class Base {
     @Autowired
-    protected WebDriver driver;
+    protected WebDriverConfig webDriverConfig;
 
     @Autowired
     protected ButtonElement buttonElement;
@@ -30,7 +31,7 @@ public abstract class Base {
 
     @PostConstruct
     private void init() {
-        WebDriverRunner.setWebDriver(this.driver);
+        WebDriverRunner.setWebDriver(this.webDriverConfig.chromeDriver());
         Configuration.browser = "firefox";
     }
 

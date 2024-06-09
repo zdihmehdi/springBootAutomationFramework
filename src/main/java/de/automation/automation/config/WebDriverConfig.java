@@ -28,7 +28,7 @@ public class WebDriverConfig {
     public WebDriver chromeDriver() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
+        //options.addArguments("--headless");
         options.addArguments("--start-maximized");
         return new ChromeDriver(options);
     }
@@ -46,7 +46,7 @@ public class WebDriverConfig {
     public WebDriver edgeDriver() {
         WebDriverManager.edgedriver().setup();
         EdgeOptions options = new EdgeOptions();
-        options.addArguments("--start-maximized");
+        //options.addArguments("--start-maximized");
         return new EdgeDriver(options);
     }
 
