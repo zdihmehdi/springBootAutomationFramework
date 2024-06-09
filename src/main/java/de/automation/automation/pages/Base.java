@@ -5,8 +5,11 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import de.automation.automation.elements.ButtonElement;
 import de.automation.automation.elements.TextInput;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -17,8 +20,20 @@ import java.util.function.Supplier;
 
 @Component
 public abstract class Base {
-    @Autowired
-    protected WebDriver driver;
+    /*@Autowired
+    protected WebDriver driver;*/
+
+    static {
+        WebDriverRunner.setWebDriver(chromeDriver());
+    }
+
+    public static WebDriver chromeDriver() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        //  options.addArguments("--headless");
+        options.addArguments("--start-maximized");
+        return new ChromeDriver(options);
+    }
 
     @Autowired
     protected ButtonElement buttonElement;
@@ -26,10 +41,10 @@ public abstract class Base {
     @Autowired
     protected TextInput textInput;
 
-    @PostConstruct
+    /*@PostConstruct
     private void init() {
         WebDriverRunner.setWebDriver(this.driver);
-    }
+    }*/
 
     @Step(value = "verify if the page is loaded.")
     public abstract boolean isLoaded();

@@ -3,6 +3,10 @@ package de.automation.automation.pageobjects;
 import de.automation.automation.config.WebDriverConfig;
 import de.automation.automation.pages.Base;
 import de.automation.automation.pages.qyterawebsite.SearchComponent;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.testng.annotations.AfterMethod;
@@ -22,8 +26,8 @@ public class TestPage extends Base {
 
     //@AfterMethod
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
+        if (chromeDriver() != null) {
+            chromeDriver().quit();
         }
     }
 }
