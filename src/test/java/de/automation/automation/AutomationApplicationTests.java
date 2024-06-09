@@ -14,7 +14,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Listeners;
 
 @SpringBootTest
-@Listeners(TestListener.class)
 class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
 
     @Autowired

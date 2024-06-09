@@ -18,7 +18,6 @@ import java.util.function.Supplier;
 @Component
 public abstract class Base {
     @Autowired
-    @Lazy
     protected WebDriver driver;
 
     @Autowired

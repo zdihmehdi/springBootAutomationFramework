@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 
-@Component
+@Configuration
 public class WebDriverConfig {
 
     @Value("${default.timeout:40}")
