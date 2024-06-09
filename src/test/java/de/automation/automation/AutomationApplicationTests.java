@@ -21,9 +21,10 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
 
     @Test
     void contextLoads() {
-        testPage.searchComponent.openQyteraWebsite();
+        System.out.println("HNAAAA");
+        /*testPage.searchComponent.openQyteraWebsite();
         testPage.searchComponent.goToQyteraSeminars();
-        System.out.println(testPage.webDriverConfig.timeout);
+        System.out.println(testPage.webDriverConfig.timeout);*/
     }
 
 

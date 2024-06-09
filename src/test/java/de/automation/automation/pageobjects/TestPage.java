@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.testng.annotations.AfterMethod;
 
-@Component
+
 public class TestPage extends Base {
     @Autowired
     public SearchComponent searchComponent;
