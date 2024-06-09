@@ -1,27 +1,28 @@
 package de.automation.automation;
 
-import com.github.javafaker.Faker;
-import de.automation.automation.config.WebDriverConfig;
-import de.automation.automation.listeners.TestListener;
-import de.automation.automation.pageobjects.TestPage;
-import de.automation.automation.pages.Base;
-import de.automation.automation.pages.qyterawebsite.SearchComponent;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.Listeners;
 
 @SpringBootTest
 class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
 
     @Test
     void contextLoads() {
-        System.out.println("HNAAAA");
-        /*testPage.searchComponent.openQyteraWebsite();
-        testPage.searchComponent.goToQyteraSeminars();
-        System.out.println(testPage.webDriverConfig.timeout);*/
+        WebDriver driver = chromeDriver();
+        driver.get("https://www.qytera.de/");
+    }
+
+    public static WebDriver chromeDriver() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        //  options.addArguments("--headless");
+        options.addArguments("--start-maximized");
+        return new ChromeDriver(options);
     }
 
 

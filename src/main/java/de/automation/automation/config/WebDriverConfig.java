@@ -19,45 +19,5 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 
-@Configuration
 public class WebDriverConfig {
-
-    @Value("${default.timeout:40}")
-    public long timeout;
-
-    @Bean
-    @ConditionalOnExpression("'${automation.browser:chrome}'.equals('chrome')")
-    public WebDriver chromeDriver() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        //  options.addArguments("--headless");
-        options.addArguments("--start-maximized");
-        return new ChromeDriver(options);
-    }
-
-
-    @Bean
-    @ConditionalOnExpression("'${automation.browser:remote}'.equals('remote')")
-    public WebDriver remoteChromeDriver() {
-        ChromeOptions options = new ChromeOptions();
-        return new RemoteWebDriver(options);
-    }
-
-    @Bean
-    @ConditionalOnExpression("'${automation.browser:chrome}'.equals('edge')")
-    public WebDriver edgeDriver() {
-        WebDriverManager.edgedriver().setup();
-        EdgeOptions options = new EdgeOptions();
-        //options.addArguments("--start-maximized");
-        return new EdgeDriver(options);
-    }
-
-    @Bean
-    @ConditionalOnExpression("'${automation.browser:chrome}'.equals('firefox')")
-    public WebDriver firefoxDriver() {
-        WebDriverManager.firefoxdriver().setup();
-        FirefoxOptions options = new FirefoxOptions();
-        options.addArguments("--start-maximized");
-        return new FirefoxDriver(options);
-    }
 }

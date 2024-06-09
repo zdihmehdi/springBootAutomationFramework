@@ -20,31 +20,12 @@ import java.util.function.Supplier;
 
 @Component
 public abstract class Base {
-    /*@Autowired
-    protected WebDriver driver;*/
-
-    static {
-        WebDriverRunner.setWebDriver(chromeDriver());
-    }
-
-    public static WebDriver chromeDriver() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        //  options.addArguments("--headless");
-        options.addArguments("--start-maximized");
-        return new ChromeDriver(options);
-    }
 
     @Autowired
     protected ButtonElement buttonElement;
 
     @Autowired
     protected TextInput textInput;
-
-    /*@PostConstruct
-    private void init() {
-        WebDriverRunner.setWebDriver(this.driver);
-    }*/
 
     @Step(value = "verify if the page is loaded.")
     public abstract boolean isLoaded();

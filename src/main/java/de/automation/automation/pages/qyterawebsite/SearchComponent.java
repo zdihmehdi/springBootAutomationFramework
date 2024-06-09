@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-@Component
+
 public class SearchComponent extends Base {
 
     public TextInput searchInput() {

@@ -19,7 +19,7 @@ public class TextInput extends AbstractWebElement {
         element()
                 .shouldBe(Condition.visible, Duration.ofSeconds(10))
                 .shouldBe(Condition.interactable, Duration.ofSeconds(10))
-                .scrollIntoView(true)
+                //.scrollIntoView(true)
                 .type(value);
     }
 
