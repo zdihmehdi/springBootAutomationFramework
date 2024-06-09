@@ -2,6 +2,7 @@ package de.automation.automation;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -23,8 +24,16 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
     public RemoteWebDriver chromeDriver() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");  // Optional: Run Chrome in headless mode
-        options.addArguments("--no-sandbox"); // Bypass OS security model
         options.addArguments("--disable-dev-shm-usage"); // Overcome limited resource problems
+        options.addArguments("--safebrowsing-disable-auto-update ");
+        options.addArguments("--disable-background-networking");
+        options.addArguments("--no-proxy-server");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--dns-prefetch-disable");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--force-device-scale-factor=1");
+        options.setPageLoadStrategy(PageLoadStrategy.EAGER);
 
         // URL of the remote Selenium Grid hub
         //String remoteWebDriverUrl = System.getProperty("remote.webdriver.url", "http://localhost:4444/wd/hub");
