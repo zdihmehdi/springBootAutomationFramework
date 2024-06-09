@@ -27,9 +27,6 @@ public abstract class Base {
     @Autowired
     protected TextInput textInput;
 
-    @Autowired
-    protected WebDriverWait wait;
-
     @PostConstruct
     private void init() {
         WebDriverRunner.setWebDriver(this.driver);
