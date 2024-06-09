@@ -58,9 +58,4 @@ public class WebDriverConfig {
         options.addArguments("--start-maximized");
         return new FirefoxDriver(options);
     }
-
-    @Bean
-    public WebDriverWait webDriverWait(WebDriver driver) {
-        return new WebDriverWait(driver, Duration.ofSeconds(this.timeout));
-    }
 }
