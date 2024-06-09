@@ -26,6 +26,10 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
         // URL of the Selenium hub
         String seleniumHubUrl = "http://54.93.239.34:4444/wd/hub";
         return new RemoteWebDriver(new URL(seleniumHubUrl), options);
