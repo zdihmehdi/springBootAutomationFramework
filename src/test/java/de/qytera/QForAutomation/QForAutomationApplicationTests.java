@@ -1,6 +1,7 @@
 package de.qytera.QForAutomation;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Test;
@@ -79,7 +80,7 @@ class QForAutomationApplicationTests {
     @Test
     void contextLoads() {
         RemoteWebDriver driver = null;
-        try {
+        /*try {
             /*System.out.println("TEST BEGIN");
 
         WebDriver driver = getGridDriver();
@@ -93,22 +94,46 @@ class QForAutomationApplicationTests {
             String seleniumHubUrl = "http://selenium-hub:4444/wd/hub/status";
             pingSeleniumHub(seleniumHubUrl);
 
-
-            ChromeOptions chromeOptions = new ChromeOptions();
+////////////////////////////////SELENIUM//////////////////////////////////////////////////////
+            /*ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--headless");
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--remote-allow-origins=*");
             driver = new RemoteWebDriver(new URL("http://selenium-hub:4444/wd/hub"), chromeOptions);
             driver.get("http://www.google.com");
-            System.out.println( driver.getTitle());
-        } catch(MalformedURLException e) {
-            e.printStackTrace();
-        } finally {
-            if (driver != null) {
-                // Close the browser and end the WebDriver session
-                driver.quit();
-            }
-        }
+            System.out.println(driver.getTitle());
+            } catch(MalformedURLException e) {
+                e.printStackTrace();
+            } finally {
+                if (driver != null) {
+                    // Close the browser and end the WebDriver session
+                    driver.quit();
+                }
+            }}*/
+////////////////////////////////SELENIDE//////////////////////////////////////////////////////
+
+        // Configure ChromeOptions
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--headless");
+            chromeOptions.addArguments("--disable-gpu");
+            chromeOptions.addArguments("--remote-allow-origins=*");
+
+            // Set ChromeOptions as capabilities
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+
+        // Set the remote WebDriver URL
+        //RemoteWebDriver remoteWebDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+
+        // Configure Selenide to use the remote WebDriver
+        Configuration.remote = "http://selenium-hub:4444/wd/hub";
+        Configuration.browser = "chrome";
+        Configuration.headless = true;
+        Configuration.browserCapabilities = capabilities;
+
+        // Open the desired URL
+        Selenide.open("http://www.google.com");
+
     }
 
     public WebDriver getGridDriver() throws MalformedURLException {
