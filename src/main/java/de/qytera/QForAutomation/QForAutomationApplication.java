@@ -1,13 +1,13 @@
-package de.automation.automation;
+package de.qytera.QForAutomation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AutomationApplication {
+public class QForAutomationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AutomationApplication.class, args);
+		SpringApplication.run(QForAutomationApplication.class, args);
 	}
 
 }
