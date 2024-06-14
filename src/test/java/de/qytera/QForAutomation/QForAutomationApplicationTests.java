@@ -90,7 +90,7 @@ class QForAutomationApplicationTests {
 
         System.out.println("TEST FINISHED");*/
 
-            String seleniumHubUrl = "http://localhost:4444/wd/hub/status";
+            String seleniumHubUrl = "http://selenium-hub:4444/wd/hub/status";
             pingSeleniumHub(seleniumHubUrl);
 
 
@@ -98,7 +98,7 @@ class QForAutomationApplicationTests {
             chromeOptions.addArguments("--headless");
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--remote-allow-origins=*");
-            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
+            driver = new RemoteWebDriver(new URL("http://selenium-hub:4444/wd/hub"), chromeOptions);
             driver.get("http://www.google.com");
             System.out.println( driver.getTitle());
         } catch(MalformedURLException e) {
