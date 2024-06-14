@@ -1,13 +1,24 @@
 package de.qytera.QForAutomation;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebDriverRunner;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
@@ -16,7 +27,16 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 @SpringBootTest
 class QForAutomationApplicationTests {
 
-    //@BeforeMethod
+    public static WebDriver remoteChromeDriver() throws MalformedURLException {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        return new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
+    }
+
+    //@BeforeSuite
     public void setUp() {
         // Set up WebDriverManager to automatically download the WebDriver binary
         WebDriverManager.chromedriver().setup();
@@ -58,11 +78,81 @@ class QForAutomationApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println("TEST BEGIN");
-        open("https://www.qytera.de/");
+        RemoteWebDriver driver = null;
+        try {
+            /*System.out.println("TEST BEGIN");
+
+        WebDriver driver = getGridDriver();
+        WebDriverRunner.setWebDriver(driver);
+        driver.get("https://www.qytera.de/");
         // Click on the "Kontakt" link
         $x("//a[contains(text(), 'Kontakt')]").click();
-        System.out.println("TEST FINISHED");
+
+        System.out.println("TEST FINISHED");*/
+
+            String seleniumHubUrl = "http://localhost:4444/wd/hub/status";
+            pingSeleniumHub(seleniumHubUrl);
+
+
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--headless");
+            chromeOptions.addArguments("--disable-gpu");
+            chromeOptions.addArguments("--remote-allow-origins=*");
+            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
+            driver.get("http://www.google.com");
+            System.out.println( driver.getTitle());
+        } catch(MalformedURLException e) {
+            e.printStackTrace();
+        } finally {
+            if (driver != null) {
+                // Close the browser and end the WebDriver session
+                driver.quit();
+            }
+        }
+    }
+
+    public WebDriver getGridDriver() throws MalformedURLException {
+        DesiredCapabilities dc = new DesiredCapabilities();
+        dc.setBrowserName("chrome");
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--disable-gpu");
+        dc.setCapability(ChromeOptions.CAPABILITY, options);
+        WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), dc);
+        ((RemoteWebDriver) driver).setFileDetector(new LocalFileDetector());
+        return driver;
+    }
+
+
+
+
+
+    public static void pingSeleniumHub(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == 200) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                System.out.println("Selenium Grid hub is running.");
+                System.out.println("Response: " + response.toString());
+            } else {
+                System.out.println("Selenium Grid hub returned status code: " + responseCode);
+            }
+        } catch (IOException e) {
+            System.out.println("Error pinging Selenium Grid hub: " + e.getMessage());
+        }
     }
 
 }
