@@ -126,8 +126,8 @@ class QForAutomationApplicationTests {
         //RemoteWebDriver remoteWebDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
 
         // Configure Selenide to use the remote WebDriver
-        //Configuration.remote = "http://selenium-hub:4444/wd/hub";
-        Configuration.remote = "http://localhost:4444/wd/hub";
+        Configuration.remote = "http://selenium-hub:4444/wd/hub";
+        //Configuration.remote = "http://localhost:4444/wd/hub";
         Configuration.browser = "chrome";
         Configuration.headless = true;
         Configuration.browserCapabilities = capabilities;
