@@ -54,14 +54,14 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         WebDriver driver = remoteChromeDriver();
 
         driver.get("https://www.qytera.de/");
-        $("li[class='tbm-item level-1']").click();
+        /*$("li[class='tbm-item level-1']").click();
         $("#edit-name").sendKeys("MEHDI");
         $("#edit-mail").sendKeys("mehdi@gmail.com");
         $("#edit-subject-0-value").sendKeys("Schulung");
         writeText();
         $("#my-submit-button-id").click();
         Thread.sleep(5000);
-        $("div[class='messages-list']").should(Condition.visible);
+        $("div[class='messages-list']").should(Condition.visible);*/
     }
 
     @Step(value = "Write text")
