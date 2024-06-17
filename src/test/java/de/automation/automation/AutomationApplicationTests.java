@@ -53,7 +53,7 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    void contextLoads() throws InterruptedException, MalformedURLException {
+    void contextLoads() throws InterruptedException {
 
         String gridUrl = "http://localhost:4444/wd/hub"; // Replace with your grid URL
 
