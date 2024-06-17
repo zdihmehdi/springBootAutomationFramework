@@ -4,6 +4,11 @@
 .project
 .settings/
 target/
+.idea
+.allure
+schema
+build
+/*/allure-results/
 
 # Log file
 *.log
