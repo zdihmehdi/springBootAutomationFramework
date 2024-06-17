@@ -54,6 +54,7 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         WebDriver driver = remoteChromeDriver();
 
         driver.get("https://www.qytera.de/");
+        System.out.println("HNA ZDIH: " + driver.findElement(By.cssSelector("div[class='content'] h1")).getText());
         /*$("li[class='tbm-item level-1']").click();
         $("#edit-name").sendKeys("MEHDI");
         $("#edit-mail").sendKeys("mehdi@gmail.com");
