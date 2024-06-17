@@ -65,18 +65,7 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         Configuration.remote = gridUrl;
         Configuration.browserCapabilities = capabilities;
 
-
-
-
-
-
-
-
-
-
-
         //WebDriver driver = remoteChromeDriver();
-
         open("https://www.qytera.de/");
         System.out.println("HNA ZDIH: " + $("div[class='content'] h1").getText());
         /*$("li[class='tbm-item level-1']").click();
