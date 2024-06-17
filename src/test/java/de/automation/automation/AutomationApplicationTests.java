@@ -63,19 +63,20 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
 
         // Configure Selenide to use remote WebDriver
         Configuration.remote = gridUrl;
+        Configuration.browserSize = "1920x1080";
         Configuration.browserCapabilities = capabilities;
 
         //WebDriver driver = remoteChromeDriver();
         open("https://www.qytera.de/");
         System.out.println("HNA ZDIH: " + $("div[class='content'] h1").getText());
-        /*$("li[class='tbm-item level-1']").click();
+        $("li[class='tbm-item level-1']").click();
         $("#edit-name").sendKeys("MEHDI");
         $("#edit-mail").sendKeys("mehdi@gmail.com");
         $("#edit-subject-0-value").sendKeys("Schulung");
         writeText();
         $("#my-submit-button-id").click();
         Thread.sleep(5000);
-        $("div[class='messages-list']").should(Condition.visible);*/
+        $("div[class='messages-list']").should(Condition.visible);
     }
 
     @Step(value = "Write text")
