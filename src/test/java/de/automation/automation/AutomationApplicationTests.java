@@ -2,6 +2,7 @@ package de.automation.automation;
 
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
@@ -10,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -18,6 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 @SpringBootTest(classes = AutomationApplication.class)
 class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
@@ -51,10 +54,31 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
 
     @Test
     void contextLoads() throws InterruptedException, MalformedURLException {
-        WebDriver driver = remoteChromeDriver();
 
-        driver.get("https://www.qytera.de/");
-        System.out.println("HNA ZDIH: " + driver.findElement(By.cssSelector("div[class='content'] h1")).getText());
+        String gridUrl = "http://localhost:4444/wd/hub"; // Replace with your grid URL
+
+        // Set desired capabilities
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setBrowserName("chrome"); // Change to the browser you want to use
+
+        // Configure Selenide to use remote WebDriver
+        Configuration.remote = gridUrl;
+        Configuration.browserCapabilities = capabilities;
+
+
+
+
+
+
+
+
+
+
+
+        //WebDriver driver = remoteChromeDriver();
+
+        open("https://www.qytera.de/");
+        System.out.println("HNA ZDIH: " + $("div[class='content'] h1").getText());
         /*$("li[class='tbm-item level-1']").click();
         $("#edit-name").sendKeys("MEHDI");
         $("#edit-mail").sendKeys("mehdi@gmail.com");
