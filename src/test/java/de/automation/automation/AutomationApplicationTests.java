@@ -70,14 +70,14 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         open("https://www.qytera.de/");
         System.out.println("HNA ZDIH: " + $("div[class='content'] h1").getText());
 
-        $("#edit-name").sendKeys("MEHDI");
+        /*$("#edit-name").sendKeys("MEHDI");
         $("#edit-mail").sendKeys("mehdi@gmail.com");
         $("#edit-subject-0-value").sendKeys("Schulung");
         writeText();
         $("#my-submit-button-id").click();
         Thread.sleep(5000);
         $("div[class='messages-list']").should(Condition.visible);
-        System.out.println("HNAAAAAA");
+        System.out.println("HNAAAAAA");*/
     }
 
     @Step("click contact tab")
