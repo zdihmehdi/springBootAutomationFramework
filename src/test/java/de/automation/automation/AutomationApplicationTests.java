@@ -69,7 +69,7 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         //WebDriver driver = remoteChromeDriver();
         open("https://www.qytera.de/");
         System.out.println("HNA ZDIH: " + $("div[class='content'] h1").getText());
-        $("li[class='tbm-item level-1']").click();
+
         $("#edit-name").sendKeys("MEHDI");
         $("#edit-mail").sendKeys("mehdi@gmail.com");
         $("#edit-subject-0-value").sendKeys("Schulung");
@@ -77,9 +77,15 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         $("#my-submit-button-id").click();
         Thread.sleep(5000);
         $("div[class='messages-list']").should(Condition.visible);
+        System.out.println("HNAAAAAA");
     }
 
-    @Step(value = "Write text")
+    @Step("click contact tab")
+    public void clickConntact() {
+        $("li[class='tbm-item level-1']").click();
+    }
+
+    @Step("Write text")
     public void writeText() {
         $("#edit-message-0-value").sendKeys(message);
     }
