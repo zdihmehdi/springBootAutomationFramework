@@ -50,8 +50,8 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    void contextLoads() throws InterruptedException {
-        WebDriver driver = chromeDriver();
+    void contextLoads() throws InterruptedException, MalformedURLException {
+        WebDriver driver = remoteChromeDriver();
 
         driver.get("https://www.qytera.de/");
         $("li[class='tbm-item level-1']").click();
