@@ -1,13 +1,16 @@
 package de.automation.automation;
 
-
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.Screenshots;
+import com.codeborne.selenide.WebDriverRunner;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -17,14 +20,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-@SpringBootTest(classes = AutomationApplication.class)
-class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
+@SpringBootTest
+@ExtendWith(AllureTestWatcher.class)
+public class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
 
     private static String message = """
             Hallo Qytera,
@@ -53,10 +61,31 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         return new ChromeDriver(options);
     }
 
-    @Test
-    void contextLoads() throws InterruptedException {
+    @BeforeEach
+    public void setupSuite() {
+        System.out.println("Setup Suite!");
+    }
 
+    @Test
+    public void contextLoadsChromeDriver() {
+        WebDriver driver = chromeDriver();
+        WebDriverRunner.setWebDriver(driver);
+        driver.get("https://www.qytera.de/");
+        Assert.assertEquals("mehdi", "mido");
+    }
+
+    @Step
+    public void goUrl() {
+        WebDriver driver = chromeDriver();
+        driver.get("https://www.qytera.de/");
+    }
+
+    //@Test
+    public void contextLoads() throws InterruptedException {
         String gridUrl = "http://localhost:4444/wd/hub";
+        WebDriver driver = chromeDriver();
+        driver.get("https://www.qytera.de/");
+        WebDriverRunner.setWebDriver(chromeDriver());
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("chrome");
@@ -65,7 +94,7 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         Configuration.browserSize = "1920x1080";
         Configuration.browserCapabilities = capabilities;
         open("https://www.qytera.de/");
-        //Assert.assertEquals("mehdi", "mido");
+        // Assert.assertEquals("mehdi", "mido");
         System.out.println("HNA ZDIH: " + $("div[class='content'] h1").getText());
 
         $("#edit-name").sendKeys("MEHDI");
@@ -75,7 +104,6 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         $("#my-submit-button-id").click();
         Thread.sleep(5000);
         $("div[class='messages-list']").should(Condition.visible);
-        System.out.println("HNAAAAAA");
     }
 
     @Step("click contact tab")
@@ -97,7 +125,23 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
         return new RemoteWebDriver(new URL(SELENIUM_HUB_URL), options);
     }
 
-    private SelenideElement searchInput() {
-        return $(By.id("edit-keys"));
+    //@AfterAll
+    public static void afterTestExecution(ExtensionContext context) {
+        if (context.getExecutionException().isPresent()) {
+            takeScreenshot();
+        }
+    }
+
+    public static void takeScreenshot() {
+        File screenshot = Screenshots.takeScreenShotAsFile();
+        if (screenshot != null) {
+            try (FileInputStream screenshotStream = new FileInputStream(screenshot)) {
+                Allure.addAttachment("Screenshot", screenshotStream);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
