@@ -15,6 +15,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -55,29 +56,26 @@ class AutomationApplicationTests extends AbstractTestNGSpringContextTests {
     @Test
     void contextLoads() throws InterruptedException {
 
-        String gridUrl = "http://localhost:4444/wd/hub"; // Replace with your grid URL
+        String gridUrl = "http://localhost:4444/wd/hub";
 
-        // Set desired capabilities
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("chrome"); // Change to the browser you want to use
+        capabilities.setBrowserName("chrome");
 
-        // Configure Selenide to use remote WebDriver
         Configuration.remote = gridUrl;
         Configuration.browserSize = "1920x1080";
         Configuration.browserCapabilities = capabilities;
-
-        //WebDriver driver = remoteChromeDriver();
         open("https://www.qytera.de/");
+        //Assert.assertEquals("mehdi", "mido");
         System.out.println("HNA ZDIH: " + $("div[class='content'] h1").getText());
 
-        /*$("#edit-name").sendKeys("MEHDI");
+        $("#edit-name").sendKeys("MEHDI");
         $("#edit-mail").sendKeys("mehdi@gmail.com");
         $("#edit-subject-0-value").sendKeys("Schulung");
         writeText();
         $("#my-submit-button-id").click();
         Thread.sleep(5000);
         $("div[class='messages-list']").should(Condition.visible);
-        System.out.println("HNAAAAAA");*/
+        System.out.println("HNAAAAAA");
     }
 
     @Step("click contact tab")
