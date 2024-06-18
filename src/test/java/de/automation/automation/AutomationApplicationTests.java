@@ -2,15 +2,12 @@ package de.automation.automation;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Screenshots;
 import com.codeborne.selenide.WebDriverRunner;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -20,10 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -87,14 +80,14 @@ public class AutomationApplicationTests extends AbstractTestNGSpringContextTests
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("chrome");
-
         Configuration.remote = gridUrl;
-        Configuration.browserSize = "1920x1080";
         Configuration.browserCapabilities = capabilities;
-        open("https://www.qytera.de/");
+        open("https://www.qytera.de");
+        WebDriver driver = WebDriverRunner.getWebDriver();
+        driver.manage().window().maximize();
         // Assert.assertEquals("mehdi", "mido");
         System.out.println("HNA ZDIH: " + $("div[class='content'] h1").getText());
-
+        open("https://www.qytera.de/kontakt");
         $("#edit-name").sendKeys("MEHDI");
         $("#edit-mail").sendKeys("mehdi@gmail.com");
         $("#edit-subject-0-value").sendKeys("Schulung");
@@ -117,29 +110,9 @@ public class AutomationApplicationTests extends AbstractTestNGSpringContextTests
     public static WebDriver remoteChromeDriver() throws MalformedURLException {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
+        //options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         return new RemoteWebDriver(new URL(SELENIUM_HUB_URL), options);
-    }
-
-    //@AfterAll
-    public static void afterTestExecution(ExtensionContext context) {
-        if (context.getExecutionException().isPresent()) {
-            takeScreenshot();
-        }
-    }
-
-    public static void takeScreenshot() {
-        File screenshot = Screenshots.takeScreenShotAsFile();
-        if (screenshot != null) {
-            try (FileInputStream screenshotStream = new FileInputStream(screenshot)) {
-                Allure.addAttachment("Screenshot", screenshotStream);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
