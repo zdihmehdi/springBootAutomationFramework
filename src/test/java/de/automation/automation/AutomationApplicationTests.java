@@ -56,7 +56,7 @@ public class AutomationApplicationTests extends AbstractTestNGSpringContextTests
 
     @BeforeEach
     public void setupSuite() {
-        System.out.println("Setup Suite!");
+        System.out.println("Test begins!");
     }
 
     //@Test
@@ -74,37 +74,72 @@ public class AutomationApplicationTests extends AbstractTestNGSpringContextTests
     }
 
     @Test
-    public void contextLoads() throws InterruptedException, MalformedURLException {
+    public void contextLoads() throws MalformedURLException {
         String gridUrl = "http://localhost:4444/wd/hub";
         WebDriverRunner.setWebDriver(remoteChromeDriver());
 
+        setUpCapabilities(gridUrl);
+        openWebsite("https://www.qytera.de");
+        maximizeWindow();
+        checkHomePageContent();
+        openContactPage();
+        fillContactForm("MEHDI", "mehdi@gmail.com", "Schulung");
+        //verifySubmissionButtonVisibility();
+        //submitForm();
+
+    }
+
+    @Step("Set up browser capabilities")
+    public void setUpCapabilities(String gridUrl) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("chrome");
         Configuration.remote = gridUrl;
         Configuration.browserCapabilities = capabilities;
-        open("https://www.qytera.de");
+    }
+
+    @Step("Open website: {url}")
+    public void openWebsite(String url) {
+        open(url);
+    }
+
+    @Step("Maximize browser window")
+    public void maximizeWindow() {
         WebDriver driver = WebDriverRunner.getWebDriver();
         driver.manage().window().maximize();
-        // Assert.assertEquals("mehdi", "mido");
-        System.out.println("HNA ZDIH: " + $("div[class='content'] h1").getText());
+    }
+
+    @Step("Check home page content")
+    public void checkHomePageContent() {
+        System.out.println("Home Page Content: " + $("div[class='content'] h1").getText());
+    }
+
+    @Step("Open contact page")
+    public void openContactPage() {
         open("https://www.qytera.de/kontakt");
-        $("#edit-name").sendKeys("MEHDI");
-        $("#edit-mail").sendKeys("mehdi@gmail.com");
-        $("#edit-subject-0-value").sendKeys("Schulung");
-        writeText();
+    }
+
+    @Step("Fill contact form with Name: {name}, Email: {email}, Subject: {subject}")
+    public void fillContactForm(String name, String email, String subject) {
+        $("#edit-name").sendKeys(name);
+        $("#edit-mail").sendKeys(email);
+        $("#edit-subject-0-value").sendKeys(subject);
+        $("#edit-message-0-value").sendKeys(message);
+    }
+
+    @Step("Submit contact form")
+    public void submitForm() {
         $("#my-submit-button-id").click();
+    }
+
+    @Step("Verify form submission")
+    public void verifySubmissionButtonVisibility() throws InterruptedException {
         Thread.sleep(5000);
         $("div[class='messages-list']").should(Condition.visible);
     }
 
     @Step("click contact tab")
-    public void clickConntact() {
+    public void clickContact() {
         $("li[class='tbm-item level-1']").click();
-    }
-
-    @Step("Write text")
-    public void writeText() {
-        $("#edit-message-0-value").sendKeys(message);
     }
 
     public static WebDriver remoteChromeDriver() throws MalformedURLException {
