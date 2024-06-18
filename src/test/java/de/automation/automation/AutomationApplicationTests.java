@@ -83,10 +83,9 @@ public class AutomationApplicationTests extends AbstractTestNGSpringContextTests
         maximizeWindow();
         checkHomePageContent();
         openContactPage();
-        fillContactForm("MEHDI", "mehdi@gmail.com", "Schulung");
+        fillContactForm("MEHDI", "mehdi@gmail.com", "Schulung", message);
         //verifySubmissionButtonVisibility();
         //submitForm();
-
     }
 
     @Step("Set up browser capabilities")
@@ -118,8 +117,8 @@ public class AutomationApplicationTests extends AbstractTestNGSpringContextTests
         open("https://www.qytera.de/kontakt");
     }
 
-    @Step("Fill contact form with Name: {name}, Email: {email}, Subject: {subject}")
-    public void fillContactForm(String name, String email, String subject) {
+    @Step("Fill contact form with Name: {name}, Email: {email}, Subject: {subject}, Message: {message}")
+    public void fillContactForm(String name, String email, String subject, String message) {
         $("#edit-name").sendKeys(name);
         $("#edit-mail").sendKeys(email);
         $("#edit-subject-0-value").sendKeys(subject);
