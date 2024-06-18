@@ -66,7 +66,7 @@ public class AutomationApplicationTests extends AbstractTestNGSpringContextTests
         System.out.println("Setup Suite!");
     }
 
-    @Test
+    //@Test
     public void contextLoadsChromeDriver() {
         WebDriver driver = chromeDriver();
         WebDriverRunner.setWebDriver(driver);
@@ -80,12 +80,10 @@ public class AutomationApplicationTests extends AbstractTestNGSpringContextTests
         driver.get("https://www.qytera.de/");
     }
 
-    //@Test
-    public void contextLoads() throws InterruptedException {
+    @Test
+    public void contextLoads() throws InterruptedException, MalformedURLException {
         String gridUrl = "http://localhost:4444/wd/hub";
-        WebDriver driver = chromeDriver();
-        driver.get("https://www.qytera.de/");
-        WebDriverRunner.setWebDriver(chromeDriver());
+        WebDriverRunner.setWebDriver(remoteChromeDriver());
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("chrome");
