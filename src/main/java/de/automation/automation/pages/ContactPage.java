@@ -1,14 +1,13 @@
 package de.automation.automation.pages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import de.automation.automation.elements.ButtonElement;
+import de.automation.automation.elements.FormElement;
 import de.automation.automation.elements.TextInput;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.stereotype.Component;
+import org.testng.Assert;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -17,15 +16,27 @@ import static com.codeborne.selenide.Selenide.open;
 public class ContactPage extends Base {
 
     private TextInput name() {
-        return textInput("name text input", () -> $($("#edit-name")));
+        return textInput("name text input", () -> $("#edit-name"));
     }
 
-    @Step("Set up browser capabilities")
-    public void setUpCapabilities(String gridUrl) {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("chrome");
-        Configuration.remote = gridUrl;
-        Configuration.browserCapabilities = capabilities;
+    private TextInput email() {
+        return textInput("email text input", () -> $("#edit-mail"));
+    }
+
+    private TextInput subject() {
+        return textInput("subject text input", () -> $("#edit-subject-0-value"));
+    }
+
+    private TextInput message() {
+        return textInput("message text input", () -> $("#edit-message-0-value"));
+    }
+
+    private FormElement websiteHeader() {
+        return formElement("get the specefied form element", () -> $("div[class='content'] h1"));
+    }
+
+    private ButtonElement submitButton() {
+        return buttonElement("submit button", () -> $("#my-submit-button-id"));
     }
 
     @Step("Open website: {url}")
@@ -39,9 +50,14 @@ public class ContactPage extends Base {
         driver.manage().window().maximize();
     }
 
-    @Step("Check home page content")
+    @Step("Verify if the header of qytera de is correctly loaded")
     public void checkHomePageContent() {
-        System.out.println("Home Page Content: " + $("div[class='content'] h1").getText());
+        Assert.assertTrue(websiteHeader().getText().contains("Wir unterstützen Sie dabei"), "verify if the header of qytera de is correctly loaded");
+    }
+
+    @Step("Open qytera website")
+    public void openQyteraPage() {
+        open("https://www.qytera.de");
     }
 
     @Step("Open contact page")
@@ -49,33 +65,16 @@ public class ContactPage extends Base {
         open("https://www.qytera.de/kontakt");
     }
 
-    @Step("Fill contact form with Name: {name}, Email: {email}, Subject: {subject}")
+    @Step("Fill contact form")
     public void fillContactForm(String name, String email, String subject, String message) {
         name().sendKeys(name);
-        $("#edit-mail").sendKeys(email);
-        $("#edit-subject-0-value").sendKeys(subject);
-        $("#edit-message-0-value").sendKeys(message);
+        email().sendKeys(email);
+        subject().sendKeys(subject);
+        message().sendKeys(message);
     }
 
-    @Step("Submit contact form")
-    public void submitForm() {
-        $("#my-submit-button-id").click();
-    }
-
-    @Step("Verify form submission")
-    public void verifySubmissionButtonVisibility() throws InterruptedException {
-        Thread.sleep(5000);
-        $("div[class='messages-list']").should(Condition.visible);
-    }
-
-    @Step("click contact tab")
-    public void clickContact() {
-        $("li[class='tbm-item level-1']").click();
-    }
-
-
-    @Override
-    public boolean isLoaded() {
-        return false;
+    @Step("Click submit button")
+    public void clickSubmitButton() {
+        submitButton().click();
     }
 }

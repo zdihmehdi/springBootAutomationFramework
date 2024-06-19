@@ -47,4 +47,12 @@ public class TextInput extends AbstractWebElement {
                 .scrollIntoView(true)
                 .clear();
     }
+
+    /**
+     * Verify if the input element exists
+     */
+    @Step(value = "clear value of field")
+    public boolean exists() {
+        return element().exists();
+    }
 }

@@ -1,7 +1,5 @@
 package de.automation.automation;
 
-import com.codeborne.selenide.WebDriverRunner;
-import de.automation.automation.pages.Base;
 import de.automation.automation.pages.ContactPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @ExtendWith(AllureTestWatcher.class)
-public class AutomationApplicationTests extends Base {
+class AutomationApplicationTests {
 
     private static String message = """
             Hallo Qytera,
@@ -41,21 +39,14 @@ public class AutomationApplicationTests extends Base {
     }
 
     @Test
-    public void contextLoads() throws InterruptedException {
-        WebDriverRunner.setWebDriver(driver);
-
+    public void contextLoads() {
         contactPage.setUpCapabilities(SELENIUM_HUB_URL);
-        contactPage.openWebsite("https://www.qytera.de");
+        contactPage.openQyteraPage();
         contactPage.maximizeWindow();
         contactPage.checkHomePageContent();
         contactPage.openContactPage();
         contactPage.fillContactForm("MEHDI", "mehdi@gmail.com", "Schulung", message);
-        //contactPage.verifySubmissionButtonVisibility();
+        contactPage.clickSubmitButton();
         //contactPage.submitForm();
-    }
-
-    @Override
-    public boolean isLoaded() {
-        return false;
     }
 }
