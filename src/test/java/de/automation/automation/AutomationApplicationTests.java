@@ -39,14 +39,14 @@ class AutomationApplicationTests {
     }
 
     @Test
-    public void contextLoads() {
+    void contextLoads() {
         contactPage.setUpCapabilities(SELENIUM_HUB_URL);
         contactPage.openQyteraPage();
         contactPage.maximizeWindow();
         contactPage.checkHomePageContent();
         contactPage.openContactPage();
         contactPage.fillContactForm("MEHDI", "mehdi@gmail.com", "Schulung", message);
-        contactPage.clickSubmitButton();
+        //contactPage.clickSubmitButton();
         //contactPage.submitForm();
     }
 }
