@@ -16,7 +16,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class ContactPage extends Base {
 
     private TextInput name() {
-        return textInput("name text input", () -> $("#edit-name"));
+        return textInput("name text input", () -> $("#edit-name_1"));
     }
 
     private TextInput email() {
